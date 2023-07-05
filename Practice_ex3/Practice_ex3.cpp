@@ -1,7 +1,6 @@
 ﻿#include <iostream>
 #include <vector>
 using namespace std;
-// существует баг с 1 элементом и большим числом корзин.
 // сделать контроль ширины
 const size_t SCREEN_WIDTH = 80;
 const size_t IMAGE_HEIGHT = 20;
@@ -25,16 +24,21 @@ void find_minmax(const vector<double> &numbers, double& min, double& max) {
     }
     
 }
-vector<size_t> make_histogram(size_t &bin_count,const vector<double>& numbers, double& min, double& max) {
+vector<size_t> make_histogram(size_t &number_count,size_t &bin_count,const vector<double>& numbers, double& min, double& max) {
     vector<size_t> bins(bin_count);
-    for (double number : numbers) {
-        size_t bin = (size_t)((number - min) / (max - min) * bin_count);
-        if (bin == bin_count) {
-            bin--;
-        }
-        bins[bin]++;
+    if (max == min) {
+        bins[0] = number_count;
     }
-    return bins;
+    else {
+        for (double number : numbers) {
+            size_t bin = (size_t)((number - min) / (max - min) * bin_count);
+            if (bin == bin_count) {
+                bin--;
+            }
+            bins[bin]++;
+        }
+        return bins;
+    }
 }
 void show_histogram_text(vector<size_t> &bins) {
     size_t max_count = 0;
@@ -97,7 +101,7 @@ int main() {
         cerr << "Enter column count: ";
         cin >> bin_count;
         find_minmax(numbers, min, max);
-        auto bins = make_histogram(bin_count, numbers, min, max);
+        auto bins = make_histogram(number_count,bin_count, numbers, min, max);
         show_histogram_text(bins);
         cerr << "Enter '1' if you arent satisfied, else enter other symbols: ";
         cin >> decision;
