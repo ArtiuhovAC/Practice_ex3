@@ -20,7 +20,7 @@ int main() {
         cerr << "Enter number count: ";
         cin >> number_count;
         cerr << "Enter numbers: ";
-        vector<double> numbers = input_numbers(number_count);
+        const auto numbers = input_numbers(number_count);
         size_t bin_count;
         cerr << "Enter column count: ";
         cin >> bin_count;
