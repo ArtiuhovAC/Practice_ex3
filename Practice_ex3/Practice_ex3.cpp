@@ -2,7 +2,9 @@
 #include <vector>
 using namespace std;
 // существует баг с 1 элементом и большим числом корзин.
-
+// сделать контроль ширины
+const size_t SCREEN_WIDTH = 80;
+const size_t IMAGE_HEIGHT = 20;
 vector <double> input_numbers(size_t count) {
     vector<double> result(count);
     for (size_t i = 0; i < count; i++) {
@@ -34,13 +36,58 @@ vector<size_t> make_histogram(size_t &bin_count,const vector<double>& numbers, d
     }
     return bins;
 }
-
+void show_histogram_text(vector<size_t> &bins) {
+    size_t max_count = 0;
+    for (size_t count : bins) {
+        if (count > max_count) {
+            max_count = count;
+        }
+    }
+    const bool scaling_needed = max_count > IMAGE_HEIGHT;
+    for (size_t i = 0; i < bins.size();i++)
+    if (scaling_needed) {
+        const double scaling_factor = (double)IMAGE_HEIGHT / max_count;
+        if (bins[i] == max_count)
+            bins[i] = IMAGE_HEIGHT;
+        else
+            bins[i] = (size_t)(bins[i] * scaling_factor);
+    }
+    size_t height;
+    if (scaling_needed) {
+        height = IMAGE_HEIGHT;
+    }
+    else height = max_count;
+    for (size_t i = height; i > 0; i--) {
+        for (size_t j = 0; j < bins.size(); j++) {
+            if (bins[j] > 9) {
+                cout << " ";
+            }
+            if (bins[j] >= i) {
+                cout << "*";
+            }
+            else {
+                cout << " ";
+            }
+            cout << " ";
+        }
+        cout << '\n';
+    }
+    for (size_t i = 0; i < bins.size(); i++) {
+        if (bins[i] > 9)
+            cout << "__";
+        else
+            cout << "_";
+        cout << " ";
+    }
+    cout << '\n';
+    for (size_t i = 0; i < bins.size(); i++)
+        cout << bins[i]<<" ";
+    cout << '\n';
+}
 int main() {
+    
     char decision;
     do {
-        // Ввод данных
-        const size_t SCREEN_WIDTH = 80;
-        const size_t MAX_ASTERISK = SCREEN_WIDTH - 4 - 1;
         size_t number_count, bin_count;
         double min, max;
         cerr << "Enter number count: ";
@@ -49,39 +96,9 @@ int main() {
         const auto numbers = input_numbers(number_count);
         cerr << "Enter column count: ";
         cin >> bin_count;
-        // Обработка данных
         find_minmax(numbers, min, max);
-        const auto bins = make_histogram(bin_count, numbers, min, max);
-        // Вывод данных
-        size_t max_count = 0;
-        for (size_t count : bins) {
-            if (count > max_count) {
-                max_count = count;
-            }
-        }
-        const bool scaling_needed = max_count > MAX_ASTERISK;
-
-        for (size_t bin : bins) {
-            if (bin < 100) {
-                cout << ' ';
-            }
-            if (bin < 10) {
-                cout << ' ';
-            }
-            cout << bin << "|";
-
-            size_t height = bin;
-            if (scaling_needed) {
-                const double scaling_factor = (double)MAX_ASTERISK / max_count;
-                height = (size_t)(bin * scaling_factor);
-            }
-
-            for (size_t i = 0; i < height; i++) {
-                cout << '*';
-            }
-            cout << '\n';
-
-        }
+        auto bins = make_histogram(bin_count, numbers, min, max);
+        show_histogram_text(bins);
         cerr << "Enter '1' if you arent satisfied, else enter other symbols: ";
         cin >> decision;
         if (decision == '1')
