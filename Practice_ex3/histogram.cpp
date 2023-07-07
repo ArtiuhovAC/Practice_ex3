@@ -5,6 +5,7 @@
 #include <time.h>
 #include <iomanip>
 #include <sstream>
+#include <fstream>
 using namespace std;
 
 void find_minmax(const vector<double>& numbers, double& min, double& max) {
@@ -38,10 +39,10 @@ vector<size_t> make_histogram(const size_t& number_count, const size_t& bin_coun
         return bins;
     }
 }
-vector <double> input_numbers(size_t count) {
+vector <double> input_numbers(istream& in, size_t count) {
     vector<double> result(count);
     for (size_t i = 0; i < count; i++) {
-        cin >> result[i];
+        in >> result[i];
     }
     return result;
 }

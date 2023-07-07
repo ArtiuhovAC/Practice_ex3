@@ -5,10 +5,9 @@
 #include <time.h>
 #include <iomanip>
 #include <sstream>
+#include <fstream>
 #include "histogram.h"
 using namespace std;
-
-
 int main() {
         srand(time(NULL));
         size_t number_count, bin_count;
@@ -16,7 +15,7 @@ int main() {
         cerr << "Enter number count: ";
         cin >> number_count;
         cerr << "Enter numbers: ";
-        const auto numbers = input_numbers(number_count);
+        const auto numbers = input_numbers(cin,number_count);
         cerr << "Enter column count: ";
         cin >> bin_count;
         find_minmax(numbers, min, max);
