@@ -7,6 +7,32 @@
 #include <sstream>
 #include <fstream>
 using namespace std;
+struct Input {
+    vector<double> numbers;
+    size_t bin_count;
+};
+vector <double> input_numbers(istream& in, size_t count) {
+    vector<double> result(count);
+    for (size_t i = 0; i < count; i++) {
+        in >> result[i];
+    }
+    return result;
+}
+Input read_input(istream& in) {
+   
+    Input data;
+    size_t bin_count;
+    cerr << "Enter number count: ";
+    size_t number_count;
+    in >> number_count;
+
+    cerr << "Enter numbers: ";
+    data.numbers = input_numbers(in, number_count);
+    
+    cerr << "Enter column count: ";
+    in >> data.bin_count;
+    return data;
+}
 
 void find_minmax(const vector<double>& numbers, double& min, double& max) {
     if (numbers.size() != 0) {
@@ -23,10 +49,10 @@ void find_minmax(const vector<double>& numbers, double& min, double& max) {
     }
     else { min = 0; max = 0; }
 }
-vector<size_t> make_histogram(const size_t& number_count, const size_t& bin_count, const vector<double>& numbers, const double& min, const double& max) {
+vector<size_t> make_histogram(const size_t& bin_count, const vector<double>& numbers, const double& min, const double& max) {
     vector<size_t> bins(bin_count);
     if (max == min) {
-        bins[0] = number_count;
+        bins[0] = numbers.size();
     }
     else {
         for (double number : numbers) {
@@ -39,13 +65,7 @@ vector<size_t> make_histogram(const size_t& number_count, const size_t& bin_coun
         return bins;
     }
 }
-vector <double> input_numbers(istream& in, size_t count) {
-    vector<double> result(count);
-    for (size_t i = 0; i < count; i++) {
-        in >> result[i];
-    }
-    return result;
-}
+
 void svg_begin(double width, double height) {
     cout << "<?xml version='1.0' encoding='UTF-8'?>\n";
     cout << "<svg ";
