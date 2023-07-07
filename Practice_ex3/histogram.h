@@ -13,7 +13,7 @@ struct Input {
     size_t bin_count;
 };
 void find_minmax(const vector<double>& numbers, double& min, double& max);
-vector<size_t> make_histogram(const size_t& bin_count, const vector<double>& numbers,const double& min,const double& max);
+vector<size_t> make_histogram(Input &data,const double& min,const double& max);
 vector <double> input_numbers(istream& in,size_t count);
 void svg_begin(double width, double height);
 void svg_end();

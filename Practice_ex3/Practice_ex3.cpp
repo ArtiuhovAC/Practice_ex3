@@ -14,6 +14,6 @@ int main() {
         double min, max;
         data = read_input(cin);
         find_minmax(data.numbers, min, max);
-        auto bins = make_histogram(data.bin_count, data.numbers, min, max);  
+        auto bins = make_histogram(data, min, max);  
         show_histogram_svg(bins,data.bin_count);
 }
