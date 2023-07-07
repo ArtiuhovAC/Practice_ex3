@@ -1,2 +1,14 @@
-﻿  test.cpp
+﻿  histogram.cpp
+C:\Users\artiu\Desktop\Практика_задание 3\Practice_ex3\histogram.cpp(118,42): warning C4244: аргумент: преобразование "_Ty" в "double", возможна потеря данных
+          with
+          [
+              _Ty=size_t
+          ]
+C:\Users\artiu\Desktop\Практика_задание 3\Practice_ex3\histogram.cpp(118,21): warning C4244: аргумент: преобразование "size_t" в "double", возможна потеря данных
+C:\Users\artiu\Desktop\Практика_задание 3\Practice_ex3\histogram.cpp(118,18): warning C4244: аргумент: преобразование "size_t" в "double", возможна потеря данных
+C:\Users\artiu\Desktop\Практика_задание 3\Practice_ex3\histogram.cpp(119,41): warning C4244: аргумент: преобразование "size_t" в "double", возможна потеря данных
+C:\Users\artiu\Desktop\Практика_задание 3\Practice_ex3\histogram.cpp(119,20): warning C4244: аргумент: преобразование "size_t" в "double", возможна потеря данных
+  test.cpp
+  Создание кода...
+C:\Users\artiu\Desktop\Практика_задание 3\Practice_ex3\histogram.cpp(40): warning C4715: make_histogram: значение возвращается не при всех путях выполнения
   lab03_test.vcxproj -> C:\Users\artiu\Desktop\Практика_задание 3\Practice_ex3\lab03_test\x64\Debug\lab03_test.exe
