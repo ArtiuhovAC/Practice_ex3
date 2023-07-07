@@ -18,18 +18,19 @@ vector <double> input_numbers(istream& in, size_t count) {
     }
     return result;
 }
-Input read_input(istream& in) {
+Input read_input(istream& in, bool prompt) {
    
     Input data;
     size_t bin_count;
-    cerr << "Enter number count: ";
+    if (prompt)
+        cerr << "Enter number count: ";
     size_t number_count;
     in >> number_count;
-
-    cerr << "Enter numbers: ";
+    if (prompt)
+        cerr << "Enter numbers: ";
     data.numbers = input_numbers(in, number_count);
-    
-    cerr << "Enter column count: ";
+    if (prompt)
+        cerr << "Enter column count: ";
     in >> data.bin_count;
     return data;
 }
@@ -49,8 +50,10 @@ void find_minmax(const vector<double>& numbers, double& min, double& max) {
     }
     else { min = 0; max = 0; }
 }
-vector<size_t> make_histogram(Input &data, const double& min, const double& max) {
+vector<size_t> make_histogram(Input &data) {
     vector<size_t> bins(data.bin_count);
+    double min, max;
+    find_minmax(data.numbers, min, max);
     if (max == min) {
         bins[0] = data.numbers.size();
     }
