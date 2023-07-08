@@ -24,7 +24,9 @@ Input download(const string& address) {
     CURL* curl = curl_easy_init();
     if (curl) {
         CURLcode res;
+        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_data);
         curl_easy_setopt(curl, CURLOPT_URL, address.c_str());
+        curl_easy_setopt(curl, CURLOPT_WRITEDATA, &buffer);
         res = curl_easy_perform(curl);
         if (res != 0) {
             cout << curl_easy_strerror(res);
@@ -33,6 +35,13 @@ Input download(const string& address) {
     }
     curl_easy_cleanup(curl);
     return read_input(buffer, false);
+}
+size_t write_data(void* items, size_t item_size, size_t item_count, void* ctx) {
+    stringstream* buffer = reinterpret_cast<stringstream*>(ctx);
+    size_t data_size = item_count * item_size;
+    items = reinterpret_cast<char*>(items);
+    buffer->write(reinterpret_cast<char*>(items), data_size);
+    return data_size;
 }
 Input read_input(istream& in, bool prompt) {
    
