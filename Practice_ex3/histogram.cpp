@@ -121,3 +121,9 @@ void show_histogram_svg(vector<size_t>& bins, const size_t& bin_count) {
     }
     svg_end();
 }
+string make_info_text() {
+    stringstream buffer;
+    // TODO: получить версию системы, записать в буфер.
+    // TODO: получить имя компьютера, записать в буфер.
+    return buffer.str();
+}
