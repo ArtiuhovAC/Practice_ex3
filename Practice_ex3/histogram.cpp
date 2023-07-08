@@ -22,8 +22,10 @@ Input download(const string& address) {
     stringstream buffer;
     curl_global_init(CURL_GLOBAL_ALL);
     CURL* curl = curl_easy_init();
+    
     if (curl) {
         CURLcode res;
+        curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, false);
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_data);
         curl_easy_setopt(curl, CURLOPT_URL, address.c_str());
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, &buffer);
@@ -113,7 +115,7 @@ void svg_text(double left, double baseline, string text) {
     cout << "<text x='" << left << "' y='" << baseline << "'>" << text << " </text>" << '\n';
 
 }
-void show_histogram_svg(vector<size_t>& bins, const size_t& bin_count) {
+void show_histogram_svg(vector<size_t>& bins, const size_t& bin_count,string stroke) {
     const auto IMAGE_WIDTH = 810;
     const auto IMAGE_HEIGHT = 745;
     const auto IMAGE_HEIGHT2 = 730;
@@ -155,12 +157,11 @@ void show_histogram_svg(vector<size_t>& bins, const size_t& bin_count) {
         }
     }
     for (int i = 0; i < bin_count; i++) {
-        string stroke = "#", fill = "#";
+        string fill = "#";
         for (int j = 0; j < RANDOM_COLOR; j++) {
             stringstream stream;
             stream << hex << rand() % 256;
             string result(stream.str());
-            stroke += result;
             fill += result;
         }
         y = height - bins[i];

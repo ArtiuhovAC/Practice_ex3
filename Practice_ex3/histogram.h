@@ -21,7 +21,7 @@ void svg_begin(double width, double height);
 void svg_end();
 void svg_rect(double x, double y, double width, double height, string stroke, string fill);
 void svg_text(double left, double baseline, string text);
-void show_histogram_svg(vector<size_t>& bins, const size_t& bin_count);
+void show_histogram_svg(vector<size_t>& bins, const size_t& bin_count,string stroke);
 Input read_input(istream& in, bool prompt);
 Input download(const string& address);
 size_t write_data(void* items, size_t item_size, size_t item_count, void* ctx);
