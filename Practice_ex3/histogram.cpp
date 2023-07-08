@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <iomanip>
+#include <string.h>
 #include <sstream>
 #include <fstream>
 #include "histogram.h"
@@ -171,4 +172,24 @@ void show_histogram_svg(vector<size_t>& bins, const size_t& bin_count,string str
     }
     svg_end();
 }
-
+bool choice_color(int argc, char* argv[], string& stroke, string& addres) {
+    if ((argc > 2) && (argc < 4)) {
+        cerr << "¬водить в формате -stroke <цвет> <адрес> или <адрес> -stroke <цвет>";
+        return false;
+    }
+    for (int i = 1; i < argc; i++) {
+        if (strcmp(argv[i], "-stroke") == 0) {
+            i++;
+            if (i < argc)
+                stroke = argv[i];
+            else {
+                cerr << "¬водить в формате -stroke <цвет> <адрес> или <адрес> -stroke <цвет>";
+                return false;
+            }
+        }
+        else {
+            addres = argv[i];
+        }
+    }
+    return true;
+}

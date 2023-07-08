@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <iomanip>
+#include <string.h>
 #include <sstream>
 #include <fstream>
 #include "curl/curl.h"
@@ -25,3 +26,4 @@ void show_histogram_svg(vector<size_t>& bins, const size_t& bin_count,string str
 Input read_input(istream& in, bool prompt);
 Input download(const string& address);
 size_t write_data(void* items, size_t item_size, size_t item_count, void* ctx);
+bool choice_color(int argc, char* argv[], string& stroke, string& addres);

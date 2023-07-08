@@ -16,28 +16,11 @@ int main(int argc, char* argv[]) {
     srand(time(NULL));
     setlocale(LC_ALL, "Rus");
     Input data;
-    string stroke = "black";
+    string stroke = "black", addres;;
     if (argc > 1) {
-        string addres;
-        if ((argc > 2) && (argc < 4)) {
-            cout << "Вводить в формате -stroke <цвет> <адрес> или <адрес> -stroke <цвет>";
-            return 0;
-        }
-        for (int i = 1; i < argc; i++) {
-            if (strcmp(argv[i], "-stroke")== 0) {
-                i++;
-                if (i < argc)
-                    stroke = argv[i];
-                else {
-                    cout << "Вводить в формате -stroke <цвет> <адрес> или <адрес> -stroke <цвет>";
-                    return 0;
-                }
-            }
-            else {
-                addres = argv[i];
-            }
-        }
-        data = download(addres);
+        if (choice_color(argc, argv, stroke, addres))
+            data = download(addres);
+        else return 0;
     }
     else {
         data = read_input(cin, true);
