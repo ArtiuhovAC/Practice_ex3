@@ -1,3 +1,4 @@
+#pragma warning(disable : 4996)
 #include <iostream>
 #include <vector>
 #include <string>
@@ -5,6 +6,7 @@
 #include <time.h>
 #include <iomanip>
 #include <sstream>
+#include <windows.h>
 using namespace std;
 
 void find_minmax(const vector<double>& numbers, double& min, double& max) {
@@ -120,4 +122,21 @@ void show_histogram_svg(vector<size_t>& bins, const size_t& bin_count) {
         x += TEXT_WIDTH;
     }
     svg_end();
+}
+string make_info_text() {
+    stringstream buffer;
+    DWORD mask = 0x0000ffff;
+    DWORD info = GetVersion();
+    DWORD version = info & mask;
+    DWORD platform = info >> 16;
+    DWORD mask_major = 0x00ff;
+    DWORD version_major = version & mask_major;
+    DWORD version_minor = version >> 8;
+    DWORD build = 0;
+    if ((info & 0b10000000'00000000'0000000'00000000) == 0) {
+        build = platform;
+    }
+    buffer << "Windows v" << version_major << "." << version_minor 
+        << "(" << build << ")";
+    return buffer.str();
 }

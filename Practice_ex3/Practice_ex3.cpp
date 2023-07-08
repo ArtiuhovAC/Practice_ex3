@@ -6,6 +6,7 @@
 #include <iomanip>
 #include <sstream>
 #include "histogram.h"
+#include <windows.h>
 using namespace std;
 
 
@@ -13,6 +14,9 @@ int main() {
         srand(time(NULL));
         size_t number_count, bin_count;
         double min, max;
+        string a = make_info_text();
+        cout << a;
+        return 0;
         cerr << "Enter number count: ";
         cin >> number_count;
         cerr << "Enter numbers: ";
