@@ -14,9 +14,7 @@ int main() {
         srand(time(NULL));
         size_t number_count, bin_count;
         double min, max;
-        string a = make_info_text();
-        cout << a;
-        return 0;
+        string info = make_info_text();
         cerr << "Enter number count: ";
         cin >> number_count;
         cerr << "Enter numbers: ";
@@ -25,5 +23,5 @@ int main() {
         cin >> bin_count;
         find_minmax(numbers, min, max);
         auto bins = make_histogram(number_count,bin_count, numbers, min, max);  
-        show_histogram_svg(bins,bin_count);
+        show_histogram_svg(bins,bin_count,info);
 }

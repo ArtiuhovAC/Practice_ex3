@@ -66,8 +66,8 @@ void svg_text(double left, double baseline, string text) {
     cout << "<text x='" << left << "' y='" << baseline << "'>" << text << " </text>" << '\n';
 
 }
-void show_histogram_svg(vector<size_t>& bins, const size_t& bin_count) {
-    const auto IMAGE_WIDTH = 810;
+void show_histogram_svg(vector<size_t>& bins, const size_t& bin_count,string info) {
+    const auto IMAGE_WIDTH = 1600;
     const auto IMAGE_HEIGHT = 745;
     const auto IMAGE_HEIGHT2 = 730;
     const auto TEXT_SDVIG = 15;
@@ -121,6 +121,9 @@ void show_histogram_svg(vector<size_t>& bins, const size_t& bin_count) {
         svg_text(x + TEXT_SDVIG, height + TEXT_SDVIG, to_string(bins[i] / MASHTAB));
         x += TEXT_WIDTH;
     }
+    string s1 = info.substr(0, 18),s2 = info.substr(18,20);
+    svg_text(0, height + TEXT_SDVIG * 2, s1);
+    svg_text(0, height + TEXT_SDVIG * 3, s2);
     svg_end();
 }
 string make_info_text() {
@@ -138,5 +141,9 @@ string make_info_text() {
     }
     buffer << "Windows v" << version_major << "." << version_minor 
         << "(" << build << ")";
+    char computer_name[MAX_COMPUTERNAME_LENGTH + 1];
+    unsigned long size = MAX_COMPUTERNAME_LENGTH + 1;
+    GetComputerNameA(computer_name, &size);
+    buffer << "Computer name: " << computer_name;
     return buffer.str();
 }
