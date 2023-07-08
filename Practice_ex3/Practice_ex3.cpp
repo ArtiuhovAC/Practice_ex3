@@ -12,10 +12,6 @@ using namespace std;
 int main() {
         srand(time(NULL));
         size_t number_count, bin_count;
-        const char* name = "Commander Shepard";
-        int year = 2154;
-        printf("%s was born in %d.\n", name, year);
-        return 0;
         double min, max;
         cerr << "Enter number count: ";
         cin >> number_count;
