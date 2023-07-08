@@ -1,4 +1,5 @@
 #pragma comment(lib, "libcurl.dll.a")
+#pragma warning(disable : 4996)
 #include <iostream>
 #include <vector>
 #include <string>
@@ -10,6 +11,7 @@
 #include <fstream>
 #include "histogram.h"
 #include "curl/curl.h"
+#include <windows.h>
 
 using namespace std;
 vector <double> input_numbers(istream& in, size_t count) {
@@ -116,9 +118,12 @@ void svg_text(double left, double baseline, string text) {
     cout << "<text x='" << left << "' y='" << baseline << "'>" << text << " </text>" << '\n';
 
 }
-void show_histogram_svg(vector<size_t>& bins, const size_t& bin_count,string stroke) {
-    const auto IMAGE_WIDTH = 810;
-    const auto IMAGE_HEIGHT = 745;
+
+
+
+void show_histogram_svg(vector<size_t>& bins, const size_t& bin_count,string stroke,string info) {
+    const auto IMAGE_WIDTH = 1600;
+    const auto IMAGE_HEIGHT = 800;
     const auto IMAGE_HEIGHT2 = 730;
     const auto TEXT_SDVIG = 15;
     const auto TEXT_WIDTH = 50;
@@ -170,6 +175,9 @@ void show_histogram_svg(vector<size_t>& bins, const size_t& bin_count,string str
         svg_text(x + TEXT_SDVIG, height + TEXT_SDVIG, to_string(bins[i] / MASHTAB));
         x += TEXT_WIDTH;
     }
+    string s1 = info.substr(0, 18),s2 = info.substr(18,20);
+    svg_text(0, height + TEXT_SDVIG * 2, s1);
+    svg_text(0, height + TEXT_SDVIG * 3, s2);
     svg_end();
 }
 bool choice_color(int argc, char* argv[], string& stroke, string& addres) {
@@ -192,4 +200,25 @@ bool choice_color(int argc, char* argv[], string& stroke, string& addres) {
         }
     }
     return true;
+}
+string make_info_text() {
+    stringstream buffer;
+    DWORD mask = 0x0000ffff;
+    DWORD info = GetVersion();
+    DWORD version = info & mask;
+    DWORD platform = info >> 16;
+    DWORD mask_major = 0x00ff;
+    DWORD version_major = version & mask_major;
+    DWORD version_minor = version >> 8;
+    DWORD build = 0;
+    if ((info & 0b10000000'00000000'0000000'00000000) == 0) {
+        build = platform;
+    }
+    buffer << "Windows v" << version_major << "." << version_minor 
+        << "(" << build << ")";
+    char computer_name[MAX_COMPUTERNAME_LENGTH + 1];
+    unsigned long size = MAX_COMPUTERNAME_LENGTH + 1;
+    GetComputerNameA(computer_name, &size);
+    buffer << "Computer name: " << computer_name;
+    return buffer.str();
 }

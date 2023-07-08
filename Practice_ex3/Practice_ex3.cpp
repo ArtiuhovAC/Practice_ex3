@@ -10,7 +10,7 @@
 #include <string.h>
 #include "histogram.h"
 #include "curl/curl.h"
-
+#include <windows.h>
 using namespace std;
 int main(int argc, char* argv[]) {
     srand(time(NULL));
@@ -26,5 +26,6 @@ int main(int argc, char* argv[]) {
         data = read_input(cin, true);
     }
     auto bins = make_histogram(data);
-    show_histogram_svg(bins, data.bin_count,stroke);
+    string info = make_info_text();
+    show_histogram_svg(bins, data.bin_count, stroke, info);
 }
