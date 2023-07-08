@@ -7,6 +7,7 @@
 #include <iomanip>
 #include <sstream>
 #include <fstream>
+#include "curl/curl.h"
 
 using namespace std;
 struct Input {
@@ -22,3 +23,4 @@ void svg_rect(double x, double y, double width, double height, string stroke, st
 void svg_text(double left, double baseline, string text);
 void show_histogram_svg(vector<size_t>& bins, const size_t& bin_count);
 Input read_input(istream& in, bool prompt);
+Input download(const string& address);

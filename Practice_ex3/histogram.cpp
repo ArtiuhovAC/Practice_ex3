@@ -1,3 +1,4 @@
+#pragma comment(lib, "libcurl.dll.a")
 #include <iostream>
 #include <vector>
 #include <string>
@@ -6,18 +7,32 @@
 #include <iomanip>
 #include <sstream>
 #include <fstream>
+#include "histogram.h"
+#include "curl/curl.h"
 
 using namespace std;
-struct Input {
-    vector<double> numbers;
-    size_t bin_count;
-};
 vector <double> input_numbers(istream& in, size_t count) {
     vector<double> result(count);
     for (size_t i = 0; i < count; i++) {
         in >> result[i];
     }
     return result;
+}
+Input download(const string& address) {
+    stringstream buffer;
+    curl_global_init(CURL_GLOBAL_ALL);
+    CURL* curl = curl_easy_init();
+    if (curl) {
+        CURLcode res;
+        curl_easy_setopt(curl, CURLOPT_URL, address.c_str());
+        res = curl_easy_perform(curl);
+        if (res != 0) {
+            cout << curl_easy_strerror(res);
+            exit(1);
+        }
+    }
+    curl_easy_cleanup(curl);
+    return read_input(buffer, false);
 }
 Input read_input(istream& in, bool prompt) {
    
@@ -146,3 +161,4 @@ void show_histogram_svg(vector<size_t>& bins, const size_t& bin_count) {
     }
     svg_end();
 }
+
